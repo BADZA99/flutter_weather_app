@@ -1,0 +1,6 @@
+// installer le pkg http http pour les appels api
+// flutter pub add  flutter_dotenv pour permettre de garder mon apikey en securite
+// ajouter .env dans les assetes de l'application pour y acceder
+// flutter:
+  //assets:
+    //- .env
