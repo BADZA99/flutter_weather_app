@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/services/API_CALL.dart';
 import 'package:weather_app/models/weather.dart';
 import 'package:weather_app/utils/cities.dart';
-import 'package:weather_app/utils/colors.dart';
+//import 'package:weather_app/utils/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/utils/waiting_message.dart';
 import 'dart:convert';
+import 'package:weather_app/screens/weather_details.dart';
 
 class ProgressScreen extends StatefulWidget {
   @override
@@ -60,7 +61,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
   @override
   void dispose() {
-    timer?.cancel();
+    timer.cancel();
     super.dispose();
   }
 
@@ -337,67 +338,82 @@ Widget buildCityList() {
             itemBuilder: (context, index) {
               return Container(
                 height: 130, // Augmente la hauteur des rectangles
-                child: Card(
-                  color:
-                      Colors.lightBlue[50], // Ajoute un fond à chaque rectangle
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      
-                      children: [
-                        Column(
-                          
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(uniqueCities[index].cityName,
-                            style: TextStyle(fontSize: 20),),
-                             SizedBox(height: 9),
-                            Text(uniqueCities[index].date.toString(),
-                            style: TextStyle(fontSize: 20),),
-                             SizedBox(height: 9),
-                            Text('${uniqueCities[index].degree}°C',
-                            style: TextStyle(fontSize: 20),),
-                          ],
-                        ),
-                        Spacer(),
-                        Text(
-                          getWeatherEmoji(uniqueCities[index].weather),
-                          style: TextStyle(
-                              fontSize: 80), // Augmente la taille des emojis
-                        ),
-                      ],
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WeatherDetailPage()),
+                    );
+                  },
+                  child: Card(
+                    color: Colors
+                        .lightBlue[50], // Ajoute un fond à chaque rectangle
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                uniqueCities[index].cityName,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              SizedBox(height: 9),
+                              Text(
+                                uniqueCities[index].date.toString(),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              SizedBox(height: 9),
+                              Text(
+                                '${uniqueCities[index].degree}°C',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Text(
+                            getWeatherEmoji(uniqueCities[index].weather),
+                            style: TextStyle(
+                                fontSize: 80), // Augmente la taille des emojis
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               );
+            
             },
           ),
         ),
         ElevatedButton(
-  onPressed: restart,
-  child: Text(
-    'Recommencer',
-    style: TextStyle(
-      color: Colors.white, 
-      fontWeight: FontWeight.bold,
-      fontSize: 15,
-    ),
-  ),
-  style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue), // Change la couleur de fond du bouton
-    padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)), // Ajoute du padding
-    shadowColor: MaterialStateProperty.all<Color>(Colors.grey), 
-    elevation: MaterialStateProperty.all<double>(5), 
-  ),
-),
+          onPressed: restart,
+          child: Text(
+            'Recommencer',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Colors.blue), // Change la couleur de fond du bouton
+            padding: MaterialStateProperty.all<EdgeInsets>(
+                EdgeInsets.all(15)), // Ajoute du padding
+            shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
+            elevation: MaterialStateProperty.all<double>(5),
+          ),
+        ),
         SizedBox(height: 20), // Ajoute un peu d'espace en dessous du bouton
       ],
     );
   }
-
 
 }
 

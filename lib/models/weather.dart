@@ -3,6 +3,10 @@ class Weather {
   final String date;
   final String degree;
   final String weather;
+  // ajoute windSpeed,humidity,windDegree
+  final String windSpeed;
+  final String humidity;
+  final String windDegree;
 
 
 
@@ -11,6 +15,9 @@ class Weather {
     required this.date,
     required this.degree,
     required this.weather,
+    required this.windSpeed,
+    required this.humidity,
+    required this.windDegree,
  
    
    
@@ -22,6 +29,9 @@ class Weather {
       date: json['date'] as String,
       degree: json['degree'],
       weather: json['weather'],
+      windSpeed: json['windSpeed'],
+      humidity: json['humidity'],
+      windDegree: json['windDegree'],
    
      
     );

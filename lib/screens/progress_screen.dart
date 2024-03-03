@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:weather_app/utils/waiting_message.dart';
 import 'dart:convert';
 import 'package:weather_app/screens/weather_details.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class ProgressScreen extends StatefulWidget {
   @override
@@ -18,15 +19,15 @@ class _ProgressScreenState extends State<ProgressScreen> {
   double progress = 0.0;
   late Timer timer;
   late Timer timerMessage;
-   bool isFinished = false;
-    bool hasStarted = false;
+  bool isFinished = false;
+  bool hasStarted = false;
 
   late Future weatherData;
   late String jsonData;
   Color backgroundColor = Colors.white;
   int cityIndex = 0;
   int messageIndex = 0;
-    // declare une liste de weather
+  // declare une liste de weather
   List<Weather> listweather = [];
 
   @override
@@ -61,7 +62,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
   @override
   void dispose() {
-    timer?.cancel();
+    timer.cancel();
     super.dispose();
   }
 
@@ -87,7 +88,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     });
   }
 
- String getWeatherEmoji(String weather) {
+  String getWeatherEmoji(String weather) {
     if (weather.toLowerCase().contains('rain')) {
       return '🌧️';
     } else if (weather.toLowerCase().contains('snow')) {
@@ -103,7 +104,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     } else if (weather.toLowerCase().contains('thunderstorm')) {
       return '⛈️';
     } else {
-      return '❓'; 
+      return '❓';
     }
   }
 
@@ -121,24 +122,22 @@ class _ProgressScreenState extends State<ProgressScreen> {
     }
   }
 
- Map<String, Color> getWeatherColors(String weather) {
+Map<String, Color> getWeatherColors(String weather) {
     switch (weather) {
       case 'Clear':
-        return {'backgroundColor': Colors.blue, 'textColor': Colors.white};
+        return {'backgroundColor': blueGreyColor, 'textColor': whiteSmokeColor};
       case 'Clouds':
-        return {'backgroundColor': Colors.grey, 'textColor': Colors.black};
+        return {'backgroundColor': darkBlueColor, 'textColor': whiteSmokeColor};
       case 'Rain':
-        return {'backgroundColor': Colors.indigo, 'textColor': Colors.white};
+        return {'backgroundColor': purpleColor, 'textColor': whiteSmokeColor};
       case 'Dust':
-        return {'backgroundColor': Colors.brown, 'textColor': Colors.white};
+        return {'backgroundColor': goldColor, 'textColor': darkBlueColor};
       case 'Thunderstorm':
-        return {'backgroundColor': Colors.black, 'textColor': Colors.white};
+        return {'backgroundColor': violetColor, 'textColor': whiteSmokeColor};
       default:
-        return {'backgroundColor': Colors.white, 'textColor': Colors.black};
+        return {'backgroundColor': whiteSmokeColor, 'textColor': darkBlueColor};
     }
   }
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,8 +149,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
     );
   }
 
-   Widget buildWeatherData() {
-   return  StreamBuilder(
+  Widget buildWeatherData() {
+    return StreamBuilder(
         stream: weatherData.asStream(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -172,84 +171,30 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 date: DateFormat('dd-MM-yyyy').format(
                     DateTime.fromMillisecondsSinceEpoch(
                         jsonDecode(jsonData)['dt'] * 1000)),
+                // ajoute windSpeed,humidity,windDegree
+                windSpeed: jsonDecode(jsonData)['wind']['speed'].toString(),
+                humidity: jsonDecode(jsonData)['main']['humidity'].toString(),
+                windDegree: jsonDecode(jsonData)['wind']['deg'].toString(),
+
               ),
-              
             );
 
             return Container(
-              color: colors['backgroundColor'],
+              color: Colors.white,
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: 10),
-                    Text(
-                      '${jsonDecode(jsonData)['name']}',
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      '${DateFormat('dd-MM-yyyy').format(DateTime.fromMillisecondsSinceEpoch(jsonDecode(jsonData)['dt'] * 1000))}',
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                    Expanded(
+                   Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            '${getWeatherEmoji(jsonDecode(jsonData)['weather'][0]['main'])}',
-                            style: const TextStyle(fontSize: 190),
+                          SizedBox(height: 250),
+
+                           LoadingAnimationWidget.inkDrop(
+                            color: colors['backgroundColor']!,
+                            size: 100,
                           ),
-                          Text(
-                            '${((jsonDecode(jsonData)['main']['temp'] - 273.15)).toStringAsFixed(0)}°C',
-                            style: const TextStyle(fontSize: 40),
-                          ),
-                          Text(
-                            '${(jsonDecode(jsonData)['weather'][0]['main'])}',
-                            style: const TextStyle(fontSize: 40),
-                          ),
-                          SizedBox(height: 30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Text(
-                                    '🌬️', // Replace with your wind emoji
-                                    style: TextStyle(fontSize: 30),
-                                  ),
-                                  Text(
-                                    '${jsonDecode(jsonData)['wind']['speed']}',
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Text(
-                                    '💧', // Replace with your humidity emoji
-                                    style: TextStyle(fontSize: 30),
-                                  ),
-                                  Text(
-                                    '${jsonDecode(jsonData)['main']['humidity']}',
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Text(
-                                    '🧭', // Replace with your degree emoji
-                                    style: TextStyle(fontSize: 30),
-                                  ),
-                                  Text(
-                                    '${jsonDecode(jsonData)['wind']['deg']}',
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 50),
+                          SizedBox(height: 250),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
                             child: Text(
@@ -312,19 +257,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
                           ),
                         ],
                       ),
-                    ),
+                    )
+                  
                   ],
                 ),
               ),
             );
           }
-        }
-      );
-  
-  
+        });
   }
 
-Widget buildCityList() {
+  Widget buildCityList() {
     Set<String> displayedCities = Set<String>();
     var uniqueCities = listweather
         .where((city) => displayedCities.add(city.cityName))
@@ -343,12 +286,14 @@ Widget buildCityList() {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WeatherDetailPage()),
+                        builder: (context) => WeatherDetailPage(
+                            key: UniqueKey(), weather: uniqueCities[index]),
+                      ),
                     );
                   },
                   child: Card(
-                    color: Colors
-                        .lightBlue[50], // Ajoute un fond à chaque rectangle
+                  // Ajoute un fond à chaque rectangle en fonction du temps
+                    color: getWeatherColors(uniqueCities[index].weather)['backgroundColor'],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
@@ -361,17 +306,24 @@ Widget buildCityList() {
                             children: [
                               Text(
                                 uniqueCities[index].cityName,
-                                style: TextStyle(fontSize: 20),
+                                // text en blanc et en gras
+                                style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 9),
+                              SizedBox(height: 5),
                               Text(
                                 uniqueCities[index].date.toString(),
-                                style: TextStyle(fontSize: 20),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    ),
                               ),
-                              SizedBox(height: 9),
+                              SizedBox(height: 5),
                               Text(
                                 '${uniqueCities[index].degree}°C',
-                                style: TextStyle(fontSize: 20),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
@@ -413,6 +365,4 @@ Widget buildCityList() {
       ],
     );
   }
-
 }
-

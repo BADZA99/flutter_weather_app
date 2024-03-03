@@ -7,9 +7,9 @@ import 'package:weather_app/screens/progress_screen.dart';
 
 
 class HomePage extends StatefulWidget {
-  final dotenv.DotEnv env;
 
-  HomePage({required this.env});
+
+  HomePage();
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -141,38 +141,3 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 }
-
-// class HomePage extends StatelessWidget {
-//   final dotenv.DotEnv env;
-
-//   HomePage({required this.env});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: homeColor,
-//       appBar: AppBar(
-//         title: Text('Acceuil'),
-//         backgroundColor: homeColor,
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text(
-//               'Welcome to the Home Page',
-//               style: TextStyle(fontSize: 24),
-//             ),
-//             SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: () {
-//                 // Do something when the button is pressed
-//               },
-//               child: Text('Commencer'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
