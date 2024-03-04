@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color purpleColor = Color(0xFF6A59C9);
-const Color goldColor = Color(0xFFE8AE18);
+const Color goldColor = Color.fromARGB(255, 177, 129, 8);
 const Color blueGreyColor = Color(0xFF566B81);
 const Color goldDuplicateColor = Color(0xFFE8AE18);
 const Color violetColor = Color(0xFF7E5A9E);

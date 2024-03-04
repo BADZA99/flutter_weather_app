@@ -41,7 +41,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
       if (progress < 1.0) {
         setState(() {
-          progress += 0.2;
+           progress += 0.17;
           cityIndex = (cityIndex + 1) % cities.length;
           weatherData = getWeatherData(cities[cityIndex]);
         });
@@ -76,7 +76,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
       timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
         if (progress < 1.0) {
           setState(() {
-            progress += 1 / 10.0;
+             progress += 0.17;
             cityIndex = (cityIndex + 1) % cities.length;
             weatherData = getWeatherData(cities[cityIndex]);
           });
@@ -127,7 +127,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 Map<String, Color> getWeatherColors(String weather) {
     switch (weather) {
       case 'Clear':
-        return {'backgroundColor': sunnyColor, 'textColor': whiteSmokeColor};
+        return {'backgroundColor': goldColor, 'textColor': whiteSmokeColor};
       case 'Clouds':
         return {'backgroundColor': cloudyColor, 'textColor': whiteSmokeColor};
       case 'Rain':
