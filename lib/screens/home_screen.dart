@@ -1,15 +1,16 @@
-import 'package:dotenv/dotenv.dart' as dotenv;
 import 'package:flutter/material.dart';
 // import colors
 import 'package:weather_app/utils/colors.dart';
 import 'package:weather_app/screens/progress_screen.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+
 
 
 
 class HomePage extends StatefulWidget {
 
 
-  HomePage();
+   HomePage();
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage>
                   const Text(
                     'Bienvenue sur WeatherApp',
                     style: TextStyle(fontSize: 27),
-                  ),
+                  ).animate().fade(duration: 200.ms).scale(delay: 200.ms),
                   const SizedBox(height: 50),
                 GestureDetector(
                     onTap: () {

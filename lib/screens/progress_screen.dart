@@ -9,6 +9,8 @@ import 'package:weather_app/utils/waiting_message.dart';
 import 'dart:convert';
 import 'package:weather_app/screens/weather_details.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+
 
 class ProgressScreen extends StatefulWidget {
   @override
@@ -39,7 +41,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
       if (progress < 1.0) {
         setState(() {
-          progress += 0.1;
+          progress += 0.2;
           cityIndex = (cityIndex + 1) % cities.length;
           weatherData = getWeatherData(cities[cityIndex]);
         });
@@ -125,19 +127,21 @@ class _ProgressScreenState extends State<ProgressScreen> {
 Map<String, Color> getWeatherColors(String weather) {
     switch (weather) {
       case 'Clear':
-        return {'backgroundColor': blueGreyColor, 'textColor': whiteSmokeColor};
+        return {'backgroundColor': sunnyColor, 'textColor': whiteSmokeColor};
       case 'Clouds':
-        return {'backgroundColor': darkBlueColor, 'textColor': whiteSmokeColor};
+        return {'backgroundColor': cloudyColor, 'textColor': whiteSmokeColor};
       case 'Rain':
-        return {'backgroundColor': purpleColor, 'textColor': whiteSmokeColor};
+        return {'backgroundColor': rainyColor, 'textColor': whiteSmokeColor};
       case 'Dust':
-        return {'backgroundColor': goldColor, 'textColor': darkBlueColor};
+        return {'backgroundColor': dustyColor, 'textColor': darkBlueColor};
       case 'Thunderstorm':
-        return {'backgroundColor': violetColor, 'textColor': whiteSmokeColor};
+        return {'backgroundColor': stormyColor, 'textColor': whiteSmokeColor};
       default:
         return {'backgroundColor': whiteSmokeColor, 'textColor': darkBlueColor};
     }
   }
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,14 +158,14 @@ Map<String, Color> getWeatherColors(String weather) {
         stream: weatherData.asStream(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
             String jsonData = jsonEncode(snapshot.data);
             Map<String, Color> colors =
                 getWeatherColors(jsonDecode(jsonData)['weather'][0]['main']);
-            // ajoute  le nom de la ville, la température, la weather,la date de la ville dans le tableau listweather sous forme d'objet
+            // ajoute  le nom de la ville, la température, la weather,la date de la ville dans le tableau listweather
             listweather.add(
               Weather(
                 cityName: jsonDecode(jsonData)['name'],
@@ -188,18 +192,18 @@ Map<String, Color> getWeatherColors(String weather) {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(height: 250),
+                          const SizedBox(height: 250),
 
                            LoadingAnimationWidget.inkDrop(
                             color: colors['backgroundColor']!,
                             size: 100,
                           ),
-                          SizedBox(height: 250),
+                          const SizedBox(height: 250),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
                             child: Text(
                               messages[messageIndex],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 24.0,
                                 color: Colors.black,
                               ),
@@ -213,7 +217,7 @@ Map<String, Color> getWeatherColors(String weather) {
                               children: [
                                 Visibility(
                                   visible: progress <
-                                      1, // Hide when progress is 100%
+                                      1, 
                                   child: LinearProgressIndicator(
                                     value: progress,
                                     minHeight: 20,
@@ -221,25 +225,25 @@ Map<String, Color> getWeatherColors(String weather) {
                                 ),
                                 Visibility(
                                   visible: progress <
-                                      1, // Hide when progress is 100%
+                                      1, // cacher en  100%
                                   child: Text(
                                     '${(progress * 100).toStringAsFixed(1)}%', // Convert progress to percentage
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors
-                                            .white), // Change color based on your preference
+                                            .white),
                                   ),
                                 ),
                                 Transform.translate(
-                                  offset: Offset(
-                                      0, -10), // Move the button 10 pixels up
+                                  offset: const Offset(
+                                      0, -10), 
                                   child: Visibility(
                                     visible: progress >=
-                                        1, // Show when progress is 100%
+                                        1, 
                                     child: ElevatedButton(
                                       onPressed: () {
                                         restart();
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Recommencer',
                                         style: TextStyle(
                                           fontSize: 18, // Increase font size
@@ -280,7 +284,7 @@ Map<String, Color> getWeatherColors(String weather) {
             itemCount: uniqueCities.length,
             itemBuilder: (context, index) {
               return Container(
-                height: 130, // Augmente la hauteur des rectangles
+                height: 130, 
                 child: InkWell(
                   onTap: () {
                     Navigator.push(
@@ -292,7 +296,6 @@ Map<String, Color> getWeatherColors(String weather) {
                     );
                   },
                   child: Card(
-                  // Ajoute un fond à chaque rectangle en fonction du temps
                     color: getWeatherColors(uniqueCities[index].weather)['backgroundColor'],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
@@ -307,44 +310,45 @@ Map<String, Color> getWeatherColors(String weather) {
                               Text(
                                 uniqueCities[index].cityName,
                                 // text en blanc et en gras
-                                style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                                style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 5),
                               Text(
-                                uniqueCities[index].date.toString(),
-                                  style: TextStyle(
+                               uniqueCities[index].weather,
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.white,
                                     ),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               Text(
                                 '${uniqueCities[index].degree}°C',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Text(
                             getWeatherEmoji(uniqueCities[index].weather),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 80), // Augmente la taille des emojis
                           ),
                         ],
                       ),
                     ),
                   ),
+                
                 ),
-              );
+              ).animate().fade(duration: 200.ms, delay: (200 * index).ms);
             },
           ),
         ),
         ElevatedButton(
           onPressed: restart,
-          child: Text(
+          child: const Text(
             'Recommencer',
             style: TextStyle(
               color: Colors.white,
@@ -356,13 +360,15 @@ Map<String, Color> getWeatherColors(String weather) {
             backgroundColor: MaterialStateProperty.all<Color>(
                 Colors.blue), // Change la couleur de fond du bouton
             padding: MaterialStateProperty.all<EdgeInsets>(
-                EdgeInsets.all(15)), // Ajoute du padding
+                const EdgeInsets.all(15)), // Ajoute du padding
             shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
             elevation: MaterialStateProperty.all<double>(5),
           ),
-        ),
+        ).animate().fade(duration: 200.ms, delay: (250).ms),
         SizedBox(height: 20), // Ajoute un peu d'espace en dessous du bouton
       ],
     );
+  
+  
   }
 }
