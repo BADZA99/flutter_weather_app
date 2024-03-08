@@ -228,7 +228,7 @@ Map<String, Color> getWeatherColors(String weather) {
                                   visible: progress <
                                       1, // cacher en  100%
                                   child: Text(
-                                    '${(progress * 100).toStringAsFixed(1)}%', // Convert progress to percentage
+                                    '${(progress * 100).toStringAsFixed(0)}%', // Convert progress to percentage
                                     style: const TextStyle(
                                         color: Colors
                                             .white),

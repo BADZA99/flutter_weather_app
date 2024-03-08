@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage>
                 children: <Widget>[
                   const Text(
                     'Bienvenue sur WeatherApp',
-                    style: TextStyle(fontSize: 27),
+                    style: TextStyle(fontSize: 30),
                   ).animate().fade(duration: 200.ms).scale(delay: 200.ms),
                   const SizedBox(height: 50),
                 GestureDetector(

@@ -95,9 +95,9 @@ Map<String, Color> getWeatherColors(String weather) {
           ).animate().fade(duration: 200.ms, delay: 800.ms),
           Text(
             '${weather.weather}',
-            style: const TextStyle(fontSize: 24, color: Colors.white),
+            style: const TextStyle(fontSize: 30, color: Colors.white),
           ).animate().fade(duration: 200.ms, delay: 1000.ms),
-          const SizedBox(height: 50),
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -154,7 +154,7 @@ Map<String, Color> getWeatherColors(String weather) {
             );
           },
           child: const Text('Retour à l\'accueil',
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16,  color: Colors.black),
           ),
         ),
       ),
@@ -168,7 +168,7 @@ Map<String, Color> getWeatherColors(String weather) {
             Navigator.pop(context);
           },
           child: const Text('Retour liste villes',
-          style: TextStyle(fontSize: 16),
+         style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
         ),
       ),
