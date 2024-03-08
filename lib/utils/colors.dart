@@ -12,8 +12,8 @@ const Color customColor = Color(0xFF202124);
 
 
 const Color sunnyColor = Color(0xFFFFD300); // yellow color for sunny day
-const Color cloudyColor = Color(0xFF87CEEB); // Bleu ciel
-const Color rainyColor = Color(0xFF4682B4); // Bleu acier
+const Color cloudyColor = Color.fromARGB(255, 5, 123, 170); // Bleu ciel
+const Color rainyColor = Color.fromARGB(255, 24, 81, 128); // Bleu acier
 const Color dustyColor = Color(0xFFD2691E); // Brun orange
 const Color stormyColor = Color(0xFF8B4513); // Brun foncé
 

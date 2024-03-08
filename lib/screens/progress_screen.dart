@@ -193,7 +193,6 @@ Map<String, Color> getWeatherColors(String weather) {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           const SizedBox(height: 250),
-
                            LoadingAnimationWidget.inkDrop(
                             color: colors['backgroundColor']!,
                             size: 100,
@@ -204,7 +203,7 @@ Map<String, Color> getWeatherColors(String weather) {
                             child: Text(
                               messages[messageIndex],
                               style: const TextStyle(
-                                fontSize: 24.0,
+                                fontSize: 22.0,
                                 color: Colors.black,
                               ),
                             ),
@@ -218,9 +217,11 @@ Map<String, Color> getWeatherColors(String weather) {
                                 Visibility(
                                   visible: progress <
                                       1, 
+                                      
                                   child: LinearProgressIndicator(
                                     value: progress,
                                     minHeight: 20,
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
                                 Visibility(
@@ -258,6 +259,8 @@ Map<String, Color> getWeatherColors(String weather) {
                                 ),
                               ],
                             ),
+                          
+                          
                           ),
                         ],
                       ),
@@ -310,7 +313,8 @@ Map<String, Color> getWeatherColors(String weather) {
                               Text(
                                 uniqueCities[index].cityName,
                                 // text en blanc et en gras
-                                style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                                style: TextStyle(fontSize: 20, color: getWeatherColors(uniqueCities[index]
+                                                    .weather)['textColor'], fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 5),
                               Text(

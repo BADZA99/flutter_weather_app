@@ -12,7 +12,7 @@ WeatherFactory wf =  WeatherFactory(API_KEY);
 Future<Weather> getWeatherData(String city) async {
   Weather weather = await wf.currentWeatherByCityName(city);
   // convertir weather en format json
-  String weatherString = weather.toString();
+  // String weatherString = weather.toString();
  
 
   return weather;

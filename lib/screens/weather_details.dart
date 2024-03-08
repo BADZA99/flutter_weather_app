@@ -42,7 +42,7 @@ class WeatherDetailPage extends StatelessWidget {
 Map<String, Color> getWeatherColors(String weather) {
     switch (weather) {
       case 'Clear':
-        return {'backgroundColor': sunnyColor, 'textColor': whiteSmokeColor};
+        return {'backgroundColor': goldColor, 'textColor': whiteSmokeColor};
       case 'Clouds':
         return {'backgroundColor': cloudyColor, 'textColor': whiteSmokeColor};
       case 'Rain':
@@ -140,16 +140,44 @@ Map<String, Color> getWeatherColors(String weather) {
             ],
           ),
           const Spacer(),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) =>  HomePage()),
-              );
-            },
-            child: const Text('Retour à l\'accueil'),
-          ).animate().fade(duration: 200.ms, delay: 2400.ms),
-          const SizedBox(height: 20),
+       Row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: [
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+          child: const Text('Retour à l\'accueil',
+          style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ),
+    ),
+    SizedBox(width: 10), 
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Retour liste villes',
+          style: TextStyle(fontSize: 16),
+                    ),
+        ),
+      ),
+    ),
+  ],
+),
+           
+           const SizedBox(height: 10),
+        
         ],
       ),
     );
