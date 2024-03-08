@@ -21,7 +21,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
   double progress = 0.0;
   late Timer timer;
   late Timer timerMessage;
-  bool isFinished = false;
+  // bool isFinished = false;
   bool hasStarted = false;
 
   late Future weatherData;
@@ -71,7 +71,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
   void restart() {
     setState(() {
       progress = 0.0;
-      isFinished = false;
+      // isFinished = false;
       listweather.clear();
       timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
         if (progress < 1.0) {
@@ -83,7 +83,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         } else {
           timer.cancel();
           setState(() {
-            isFinished = true;
+            // isFinished = true;
           });
         }
       });
@@ -137,7 +137,7 @@ Map<String, Color> getWeatherColors(String weather) {
       case 'Thunderstorm':
         return {'backgroundColor': stormyColor, 'textColor': whiteSmokeColor};
       default:
-        return {'backgroundColor': whiteSmokeColor, 'textColor': darkBlueColor};
+        return {'backgroundColor': stormyColor, 'textColor': darkBlueColor};
     }
   }
   
@@ -146,7 +146,7 @@ Map<String, Color> getWeatherColors(String weather) {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Progress Screen'),
+        title: const Text('Loading Screen'),
         backgroundColor: Colors.transparent,
       ),
       body: progress >= 1 ? buildCityList() : buildWeatherData(),
@@ -212,7 +212,7 @@ Map<String, Color> getWeatherColors(String weather) {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Stack(
-                              alignment: Alignment.center,
+                              alignment: Alignment.centerRight,
                               children: [
                                 Visibility(
                                   visible: progress <
@@ -220,7 +220,7 @@ Map<String, Color> getWeatherColors(String weather) {
                                       
                                   child: LinearProgressIndicator(
                                     value: progress,
-                                    minHeight: 20,
+                                    minHeight: 24,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
@@ -228,10 +228,11 @@ Map<String, Color> getWeatherColors(String weather) {
                                   visible: progress <
                                       1, // cacher en  100%
                                   child: Text(
-                                    '${(progress * 100).toStringAsFixed(0)}%', // Convert progress to percentage
+                                    '${(progress * 100).toStringAsFixed(0)}%', 
                                     style: const TextStyle(
                                         color: Colors
-                                            .white),
+                                            .black,
+                                            fontWeight: FontWeight.bold), 
                                   ),
                                 ),
                                 Transform.translate(
@@ -259,8 +260,6 @@ Map<String, Color> getWeatherColors(String weather) {
                                 ),
                               ],
                             ),
-                          
-                          
                           ),
                         ],
                       ),
@@ -313,10 +312,9 @@ Map<String, Color> getWeatherColors(String weather) {
                               Text(
                                 uniqueCities[index].cityName,
                                 // text en blanc et en gras
-                                style: TextStyle(fontSize: 20, color: getWeatherColors(uniqueCities[index]
-                                                    .weather)['textColor'], fontWeight: FontWeight.bold),
+                                style: TextStyle(fontSize: 25, color:  Colors.white, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               Text(
                                uniqueCities[index].weather,
                                   style: const TextStyle(

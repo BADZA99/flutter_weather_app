@@ -1,6 +1,5 @@
 import 'package:weather/weather.dart';
 import 'package:weather_app/services/api.dart';
-
 import 'dart:convert';
 
 String printJson(Map<String, dynamic> data) {
